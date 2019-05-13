@@ -1,0 +1,23 @@
+{
+  "name": "experistest",
+  "version": "1.0.0",
+  "description": "ExperisTest by WRC",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm start --prefix client",
+    "server": "nodemon server",
+    "start": "node server",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driverco/ExperisTest.git"
+  },
+  "author": "Wilmer Rodriguez C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/driverco/ExperisTest/issues"
+  },
+  "homepage": "https://github.com/driverco/ExperisTest#readme"
+}
