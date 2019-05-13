@@ -1,5 +1,6 @@
 var express = require('express');
 const soap = require('soap');
+var Calc = require('../models/calc');
 
 var router = express.Router();
 
@@ -34,12 +35,12 @@ router.get('/:func/:int1/:int2', function (req, res) {
     soap.createClient(url, function (err, client) {
         if(funct==="add"){
             client.Add(args, function (err, result) {
-                console.log(result);
+                Calc.insert(funct,int1,int2,result.AddResult,()=>{});
                 return res.json(result);
             });
         }else if (funct === "subtract"){
             client.Subtract(args, function (err, result) {
-                console.log(result);
+                Calc.insert(funct,int1,int2,result.SubtractResult,()=>{});
                 return res.json(result);
             });
         }else if (funct === "divide"){
@@ -48,13 +49,13 @@ router.get('/:func/:int1/:int2', function (req, res) {
                 return res.json({error:"no se puede dividir por cero"});
             }else{
                 client.Divide(args, function (err, result) {
-                    console.log(result);
+                    Calc.insert(funct,int1,int2,result.DivideResult,()=>{});
                     return res.json(result);
                 });
             }
         }else if (funct === "multiply"){
             client.Multiply(args, function (err, result) {
-                console.log(result);
+                Calc.insert(funct,int1,int2,result.MultiplyResult,()=>{});
                 return res.json(result);
             });
         }else{

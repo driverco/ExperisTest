@@ -1,3 +1,13 @@
+create table Calc(
+	id               serial                 NOT NULL,
+	time             timestamp              NOT NULL,
+	operation        character VARYING(10)  NOT NULL,
+	int1             integer                NOT NULL,
+	int2             integer                NOT NULL,
+	Response         integer                NOT NULL,
+	primary key(id)
+)
+
 create table Users(
 	id               integer                NOT NULL,
 	name             character VARYING(256) NOT NULL,
