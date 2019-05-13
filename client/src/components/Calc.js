@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { Input, Row, Col } from 'reactstrap';
-const soap = require('soap');
 class Calc extends Component {
     constructor(props) {
         super(props);
         this.state = {
             num1: 0,
             num2: 0,
-            result:0
+            result: 0
         }
         this.handleChange = this.handleChange.bind(this);
         this.add = this.add.bind(this);
+        this.subtract = this.subtract.bind(this);
+        this.divide = this.divide.bind(this);
+        this.multiply = this.multiply.bind(this);
 
 
     }
@@ -26,32 +28,38 @@ class Calc extends Component {
                     <li>Ingrese los datos a operar</li>
                 </ul>
                 <Row >
-                        <Col><label htmlFor="num1">Primer Número: </label></Col>
-                        <Col>
-                            <Input type="text" placeholder="numero" name="num1" value={this.state.num1} onChange={this.handleChange} />
-                        </Col>
-                    </Row><br />
-                    <Row >
-                        <Col><label htmlFor="num2">Segundo Número: </label></Col>
-                        <Col>
-                            <Input type="text" placeholder="numero" name="num2" value={this.state.num2} onChange={this.handleChange} />
-                        </Col>
-                    </Row><br />
-                    <Row >
+                    <Col><label htmlFor="num1">Primer Número: </label></Col>
                     <Col>
-                    <button className="btn btn-primary" onClick={()=>this.add(this.state.num1,this.state.num2)}>+ Sumar</button>
+                        <Input type="text" placeholder="numero" name="num1" value={this.state.num1} onChange={this.handleChange} />
+                    </Col>
+                </Row><br />
+                <Row >
+                    <Col><label htmlFor="num2">Segundo Número: </label></Col>
+                    <Col>
+                        <Input type="text" placeholder="numero" name="num2" value={this.state.num2} onChange={this.handleChange} />
+                    </Col>
+                </Row><br />
+                <Row >
+                    <Col>
+                        <button className="btn btn-primary" onClick={() => this.add(this.state.num1, this.state.num2)}>+ Sumar</button>
                     </Col>
                     <Col>
-                    <button className="btn btn-primary">- Restar</button>
+                        <button className="btn btn-primary" onClick={() => this.subtract(this.state.num1, this.state.num2)}>- Restar</button>
                     </Col>
                     <Col>
-                    <button className="btn btn-primary">* Multiplicar</button>
+                        <button className="btn btn-primary" onClick={() => this.multiply(this.state.num1, this.state.num2)}>* Multiplicar</button>
                     </Col>
                     <Col>
-                    <button className="btn btn-primary">/ Dividir</button>
+                        <button className="btn btn-primary" onClick={() => this.divide(this.state.num1, this.state.num2)}>/ Dividir</button>
                     </Col>
-                    </Row>
-               
+                </Row><br />
+                <Row >
+                    <Col><label htmlFor="num2">Resultado: </label></Col>
+                    <Col>
+                        {this.state.result}
+                    </Col>
+                </Row>
+
 
             </div>
         )
@@ -61,16 +69,49 @@ class Calc extends Component {
     }
 
     add(num1param, num2param) {
-        
-  var url = 'http://www.dneonline.com/calculator.asmx';
-  //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-  var args = {name: 'value'};
-  soap.createClientAsync(url).then((client) => {
-    return client.MyFunctionAsync(args);
-  }).then((result) => {
-    console.log(result);
-  });
+        fetch('/api/calc/add/' + num1param + "/" + num2param)
+            .then(res => res.json())
+            .then(res => {
+                if (res.error !== undefined) {
+                    this.setState({ result: res.error });
+                } else {
+                    this.setState({ result: res.AddResult });
+                }
+            });
     }
+    subtract(num1param, num2param) {
+        fetch('/api/calc/subtract/' + num1param + "/" + num2param)
+            .then(res => res.json())
+            .then(res => {
+                if (res.error !== undefined) {
+                    this.setState({ result: res.error });
+                } else {
+                    this.setState({ result: res.SubtractResult });
+                }
+            });
+    }
+    divide(num1param, num2param) {
+        fetch('/api/calc/divide/' + num1param + "/" + num2param)
+            .then(res => res.json())
+            .then(res => {
+                if (res.error !== undefined) {
+                    this.setState({ result: res.error });
+                } else {
+                    this.setState({ result: res.DivideResult });
+                }
+            });
+    }
+    multiply(num1param, num2param) {
+        fetch('/api/calc/multiply/' + num1param + "/" + num2param)
+            .then(res => res.json())
+            .then(res => {
+                if (res.error !== undefined) {
+                    this.setState({ result: res.error });
+                } else {
+                    this.setState({ result: res.MultiplyResult });
+                }
 
+            });
+    }
 }
 export default Calc;

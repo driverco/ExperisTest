@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/api/users', require('./api/users'));
+app.use('/api/calc', require('./api/calc'));
 
 if (ENV === 'production') {
     console.log("Starting server in Production Mode");
