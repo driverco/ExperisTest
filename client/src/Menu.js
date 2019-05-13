@@ -11,7 +11,7 @@ export default [
     },
     {
         title: 'Usuarios',
-        url:'/login',
+        url:'/users',
         icon:'account_circle'
     }
     

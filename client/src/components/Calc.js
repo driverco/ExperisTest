@@ -4,11 +4,12 @@ class Calc extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            num1: 0,
-            num2: 0,
-            result: 0
+            num1: "",
+            num2: "",
+            result: ""
         }
         this.handleChange = this.handleChange.bind(this);
+        this.operar = this.operar.bind(this);
         this.add = this.add.bind(this);
         this.subtract = this.subtract.bind(this);
         this.divide = this.divide.bind(this);
@@ -41,16 +42,16 @@ class Calc extends Component {
                 </Row><br />
                 <Row >
                     <Col>
-                        <button className="btn btn-primary" onClick={() => this.add(this.state.num1, this.state.num2)}>+ Sumar</button>
+                        <button className="btn btn-primary" onClick={() => this.operar("add", this.state.num1, this.state.num2)}>+ Sumar</button>
                     </Col>
                     <Col>
-                        <button className="btn btn-primary" onClick={() => this.subtract(this.state.num1, this.state.num2)}>- Restar</button>
+                        <button className="btn btn-primary" onClick={() => this.operar("subtract", this.state.num1, this.state.num2)}>- Restar</button>
                     </Col>
                     <Col>
-                        <button className="btn btn-primary" onClick={() => this.multiply(this.state.num1, this.state.num2)}>* Multiplicar</button>
+                        <button className="btn btn-primary" onClick={() => this.operar("multiply", this.state.num1, this.state.num2)}>* Multiplicar</button>
                     </Col>
                     <Col>
-                        <button className="btn btn-primary" onClick={() => this.divide(this.state.num1, this.state.num2)}>/ Dividir</button>
+                        <button className="btn btn-primary" onClick={() => this.operar("divide", this.state.num1, this.state.num2)}>/ Dividir</button>
                     </Col>
                 </Row><br />
                 <Row >
@@ -58,7 +59,7 @@ class Calc extends Component {
                     <Col>
                         {this.state.result}
                     </Col>
-                </Row>
+                </Row><br /><br /><br />
 
 
             </div>
@@ -68,6 +69,21 @@ class Calc extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    operar(operac, num1param, num2param){
+        if(this.state.num1==="") {
+            this.setState({result:"el primer número es obligatorio"});
+            return "";
+        }
+        if(this.state.num2==="") {
+            this.setState({result:"el segundo número es obligatorio"});
+            return "";
+        }
+        if(operac==="add") this.add(num1param, num2param);
+        if(operac==="subtract") this.subtract(num1param, num2param);
+        if(operac==="divide") this.divide(num1param, num2param);
+        if(operac==="multiply") this.multiply(num1param, num2param);
+
+    }
     add(num1param, num2param) {
         fetch('/api/calc/add/' + num1param + "/" + num2param)
             .then(res => res.json())
