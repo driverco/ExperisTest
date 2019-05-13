@@ -19,5 +19,16 @@
   "bugs": {
     "url": "https://github.com/driverco/ExperisTest/issues"
   },
-  "homepage": "https://github.com/driverco/ExperisTest#readme"
+  "homepage": "https://github.com/driverco/ExperisTest#readme",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "pg": "^7.9.0",
+    "soap": "^0.27.1"
+  }
 }
